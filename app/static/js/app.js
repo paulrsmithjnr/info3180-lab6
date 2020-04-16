@@ -41,6 +41,8 @@ Vue.component('app-footer', {
     }
 })
 
+
+
 const NewsList = Vue.component('news-list', {
   template: `
       <div class="form-inline d-flex justify-content-center">
@@ -49,61 +51,44 @@ const NewsList = Vue.component('news-list', {
             <input type="search" name="search" v-model="searchTerm" id="search" class="form-control mb-2 mr-sm-2" placeholder="Enter search term here" />
             <button class="btn btn-primary mb-2" @click="searchNews">Search</button>
         </div>
-        <div id="news_articles">
-        </div>
+        <div class="news">
+            <h2 class="text-center">News</h2>
+            <ul class="news__list">
+                <li v-for="article in articles" class="news__item"> <b>{{ article.title }}</b> <br> <img class = "images" v-bind:src = "article.urlToImage" alt = "News article image" /> <br> {{ article.description }} <br><br></li>
+            </ul>
+          </div>
       </div>
   `,
   created: function() {
     let self = this;
-    fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=<api_key_here>')
+    fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=4616f2be3a1741b1bcbfe723436bfaa9')
         .then(function(response) {
             return response.json();
-        })
+    })
         .then(function(data) {
             console.log(data);
             self.articles = data.articles;
-
-            /*                   My Addition                     */
-            /****************************************************/
-            let html = "<br><div class=\"news text-center\"> <h2>Top Headlines</h2> <ul class=\"news__list\">";
-            self.articles.forEach(article => {
-              html += "<li class=\"news__item\"> <b>" + article.title + "</b> <br> <img class = \"images\" src = \" " + article.urlToImage + "\" alt = \"New image\" /> <br>" + article.description + "<br><br></li>";
-              
-            });
-            html += "</ul> </div>";
-            document.getElementById("news_articles").innerHTML = html;
-            /****************************************************/
-        });
-    }, 
-    data: function() {
-      return {
-        articles: [],
-        searchTerm: '',
-      }
-    },
-    methods: {
-      searchNews: function() {
-      let self = this;
-      fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=<api_key_here>')
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          console.log(data);
-          self.articles = data.articles;
-
-          /*                   My Addition                     */
-          /****************************************************/
-          let html = "<br><div class=\"news text-center\"> <h2>News articles related to \"" + self.searchTerm + "\"</h2> <ul class=\"news__list\">";
-          self.articles.forEach(article => {
-            html += "<li class=\"news__item\"> <b>" + article.title + "</b> <br> <img class = \"images\" src = \" " + article.urlToImage + "\" alt = \"New image\" /> <br>" + article.description + "<br><br></li>";
-          });
-          html += "</ul> </div>";
-          document.getElementById("news_articles").innerHTML = html;
-          /****************************************************/
-        });
-      }
+    });
+  }, 
+  data: function() {
+    return {
+      articles: [],
+      searchTerm: ''
     }
+  },
+  methods: {
+    searchNews: function() {
+    let self = this;
+    fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=4616f2be3a1741b1bcbfe723436bfaa9')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        console.log(data);
+        self.articles = data.articles;
+      });
+    }
+  }
 });
 
 const Home = Vue.component('home', {
