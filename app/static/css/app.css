@@ -25,3 +25,13 @@ footer  {
     padding: 10px;
     width: 320px;
 }
+
+#templateDiv{
+    flex-wrap: wrap;
+}
+
+p {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}

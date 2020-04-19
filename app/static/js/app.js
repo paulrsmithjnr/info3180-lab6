@@ -45,12 +45,13 @@ Vue.component('app-footer', {
 
 const NewsList = Vue.component('news-list', {
   template: `
-      <div class="form-inline d-flex justify-content-center">
+      <div id = "templateDiv" class="form-inline d-flex justify-content-center">
         <div class="form-group mx-sm-3 mb-2">
             <label class="sr-only" for="search">Search</label>
             <input type="search" name="search" v-model="searchTerm" id="search" class="form-control mb-2 mr-sm-2" placeholder="Enter search term here" />
             <button class="btn btn-primary mb-2" @click="searchNews">Search</button>
         </div>
+        <p>You are searching for {{ searchTerm }}</p>
         <div class="news">
             <h2 class="text-center">News</h2>
             <ul class="news__list">
@@ -61,7 +62,7 @@ const NewsList = Vue.component('news-list', {
   `,
   created: function() {
     let self = this;
-    fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=<your_api_key>')
+    fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=<Your_api_key_here>')
         .then(function(response) {
             return response.json();
     })
@@ -79,7 +80,7 @@ const NewsList = Vue.component('news-list', {
   methods: {
     searchNews: function() {
     let self = this;
-    fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=<your_api_key>')
+    fetch('https://newsapi.org/v2/everything?q='+ self.searchTerm + '&language=en&apiKey=<Your_api_key_here>')
       .then(function(response) {
         return response.json();
       })
